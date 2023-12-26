@@ -256,7 +256,8 @@ func unmarshal(data []byte, ctp request.ContentType, v interface{}) error {
 	return nil
 }
 
-func byteToJsonArray(v []byte, list any) error {
+func anyToJsonArray(vAny, list any) error {
+	v, err := json.Marshal(&vAny)
 	jr := gjson.ParseBytes(v)
 	var vList []interface{}
 	if jr.IsObject() {
@@ -559,7 +560,7 @@ func (srv *Server) handleRequest(w http.ResponseWriter, r *http.Request, isEncrp
 				return nil, err
 			}
 			if srv.subscribeMsgPopupHandler != nil {
-				byteToJsonArray(msg.ListBytes, &msg.SubscribeMsgPopupEvent)
+				anyToJsonArray(msg.ListAny, &msg.SubscribeMsgPopupEvent)
 				srv.subscribeMsgPopupHandler(msg)
 			}
 
@@ -579,7 +580,7 @@ func (srv *Server) handleRequest(w http.ResponseWriter, r *http.Request, isEncrp
 				return nil, err
 			}
 			if srv.subscribeMsgChangeHandler != nil {
-				byteToJsonArray(msg.ListBytes, &msg.SubscribeMsgChangeEvent)
+				anyToJsonArray(msg.ListAny, &msg.SubscribeMsgChangeEvent)
 				srv.subscribeMsgChangeHandler(msg)
 				useCommonHandler = false
 			}

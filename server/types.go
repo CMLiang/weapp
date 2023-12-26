@@ -693,7 +693,7 @@ type SubscribeMsgPopupEvent struct {
 	CommonServerResult
 	// https://developers.weixin.qq.com/community/develop/doc/000e0c47cb85b070d1bc00fcf51c00?fromCreate=0
 	SubscribeMsgPopupEvent []*UserSubscribedMsg
-	ListBytes              []byte `json:"List" xml:"SubscribeMsgChangeEvent"`
+	ListAny                interface{} `json:"List" xml:"SubscribeMsgChangeEvent"`
 }
 
 // 订阅消息发送结果通知事件内容
@@ -728,7 +728,7 @@ type SubscribeMsgChangeEvent struct {
 	CommonServerResult
 	// https://developers.weixin.qq.com/community/develop/doc/000e0c47cb85b070d1bc00fcf51c00?fromCreate=0
 	SubscribeMsgChangeEvent []*UserChangesSubscribeMsg
-	ListBytes               []byte `json:"List" xml:"SubscribeMsgChangeEvent"`
+	ListAny                 interface{} `json:"List" xml:"SubscribeMsgChangeEvent"`
 }
 
 // 订阅的模板
