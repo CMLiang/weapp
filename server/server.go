@@ -589,23 +589,20 @@ func (srv *Server) handleRequest(w http.ResponseWriter, r *http.Request, isEncrp
 			}
 
 		default:
-			goto CallCommonHandler
+
 		}
 
 	default:
-		goto CallCommonHandler
+
 	}
 	if useCommonHandler {
-		goto CallCommonHandler
-	}
-
-CallCommonHandler:
-	msg := make(map[string]interface{})
-	if err := unmarshal(raw, ctp, &msg); err != nil {
-		return nil, err
-	}
-	if srv.handler != nil {
-		return srv.handler(msg), nil
+		msg := make(map[string]interface{})
+		if err := unmarshal(raw, ctp, &msg); err != nil {
+			return nil, err
+		}
+		if srv.handler != nil {
+			return srv.handler(msg), nil
+		}
 	}
 
 	return nil, nil
