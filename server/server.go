@@ -258,6 +258,9 @@ func unmarshal(data []byte, ctp request.ContentType, v interface{}) error {
 
 func anyToJsonArray(vAny, list any) error {
 	v, err := json.Marshal(&vAny)
+	if err != nil {
+		return err
+	}
 	jr := gjson.ParseBytes(v)
 	var vList []interface{}
 	if jr.IsObject() {
